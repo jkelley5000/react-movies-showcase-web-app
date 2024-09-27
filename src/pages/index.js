@@ -1,6 +1,7 @@
 import * as React from "react"
 
 import Header from "../components/Header"
+import Filters from "../components/Filters"
 
 const pageStyles = {
     color: "#232129",
@@ -129,6 +130,7 @@ const IndexPage = () => {
     return (
         <main style={pageStyles}>
             <Header />
+            <Filters />
             <h1 style={headingStyles}>
                 CCongratulations
                 <br />
