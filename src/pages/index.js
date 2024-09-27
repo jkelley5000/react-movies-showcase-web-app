@@ -2,6 +2,7 @@ import * as React from "react"
 
 import Header from "../components/Header"
 import Filters from "../components/Filters"
+import Spotlight from "../components/Spotlight"
 
 const pageStyles = {
     color: "#fff",
@@ -132,6 +133,7 @@ const IndexPage = () => {
         <main style={pageStyles}>
             <Header />
             <Filters />
+            <Spotlight />
             <h1 style={headingStyles}>
                 CCongratulations
                 <br />
