@@ -1,6 +1,7 @@
 import React from "react";
 
 const filtersMainStyle = {
+    marginTop: 5,
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start"
