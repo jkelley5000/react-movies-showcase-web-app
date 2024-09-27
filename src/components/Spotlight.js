@@ -78,8 +78,9 @@ const nStyle = {
 const overlayStyle = {
     position: "absolute",
     width: "95%",
-    height: "100%",
-    background: "linear-gradient(to bottom left, rgba(255, 255, 255, 0) 40%, rgba(0, 0, 0, 1) 100%)"
+    height: "400px",
+    background: "linear-gradient(to bottom left, rgba(255, 255, 255, 0) 40%, rgba(0, 0, 0, 1) 100%)",
+    borderRadius: 15
 }
 
 const Spotlight = () => {
