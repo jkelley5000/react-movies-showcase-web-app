@@ -2,7 +2,7 @@ import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
 
 const spotlightStyle = {
-    marginTop: 15,
+    margin: 15,
     height: 400,
     display: "flex",
     flexDirection: "column",
@@ -10,15 +10,19 @@ const spotlightStyle = {
 }
 
 const headingTypeStyle = {
-    fontSize: "3em",
+    fontSize: 30,
     position: "relative",
     zIndex: 1,
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "-20px"
 }
 
 const spotlightTitleStyle = {
-    fontSize: "6em",
+    fontSize: 60,
     position: "relative",
     zIndex: 1,
+    marginLeft: 10
 }
 
 const buttonGroupStyle = {
@@ -35,7 +39,8 @@ const playButtonStyle = {
     color: "#000",
     fontWeight: 600,
     marginRight: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    marginLeft: 10
 }
 
 const myListButtonStyle = {
@@ -45,15 +50,18 @@ const myListButtonStyle = {
     backgroundColor: "#888",
     color: "#fff",
     fontWeight: 600,
-    marginBottom: 10
+    marginBottom: 10,
 }
 
 const spotlightImageStyle = {
     height: 400,
-    position: "absolute"
+    position: "absolute",
+    borderRadius: 15,
+    marginRight: 25
 }
 
 const descriptionStyle = {
+    marginLeft: 10,
     position: "relative",
     zIndex: 1,
 }
@@ -61,7 +69,13 @@ const descriptionStyle = {
 const nStyle = {
     color: "red",
     fontWeight: 600,
-    marginRight: 5
+    marginRight: 5,
+    marginLeft: 10,
+    fontSize: 50
+}
+
+const overlayStyle = {
+
 }
 
 const Spotlight = () => {
@@ -72,9 +86,10 @@ const Spotlight = () => {
                 alt="Space Zombies!"
                 style={spotlightImageStyle}
             />
+            <div style={overlayStyle}></div>
             <p style={headingTypeStyle}>
                 <span style={nStyle}>N</span>
-                Series
+                SERIES
             </p>
             <p style={spotlightTitleStyle}>Space Zombies!</p>
             <p style={descriptionStyle}>Those space zombies are at it again. Only this time due to cuts in the space budget they can't zip around space causing mayhem like normal. They've had to...</p>
