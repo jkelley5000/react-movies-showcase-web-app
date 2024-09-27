@@ -7,7 +7,11 @@ const filtersMainStyle = {
 }
 
 const filterListStyle = {
-
+    border: "solid 1px #989898",
+    borderRadius: 15,
+    paddingRight: 10,
+    paddingLeft: 10,
+    marginRight: 6
 }
 
 const filterOptionStyle = {

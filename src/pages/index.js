@@ -4,9 +4,10 @@ import Header from "../components/Header"
 import Filters from "../components/Filters"
 
 const pageStyles = {
-    color: "#232129",
+    color: "#fff",
     padding: 10,
     fontFamily: "-apple-system, Roboto, sans-serif, serif",
+    backgroundColor: "#180f1e"
 }
 const headingStyles = {
     marginTop: 0,

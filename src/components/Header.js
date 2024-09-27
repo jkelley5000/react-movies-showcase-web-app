@@ -7,14 +7,18 @@ const greetingControlsStyle = {
 }
 
 const greetingText = {
-    content: "Welcome back Captain!"
+    content: "Welcome back Captain!",
+    style: {
+        fontSize: "2em",
+        fontWeight: "600"
+    }
 }
 
 const Header = () => {
     return (
         <main>
             <div style={greetingControlsStyle}>
-                <div>
+                <div style={greetingText.style}>
                     {greetingText.content}
                 </div>
                 <div>
