@@ -77,7 +77,7 @@ const nStyle = {
 
 const overlayStyle = {
     position: "absolute",
-    width: "100%",
+    width: "95%",
     height: "100%",
     background: "linear-gradient(to bottom left, rgba(255, 255, 255, 0) 40%, rgba(0, 0, 0, 1) 100%)"
 }

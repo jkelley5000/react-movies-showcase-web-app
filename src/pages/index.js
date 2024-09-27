@@ -1,8 +1,8 @@
 import * as React from "react"
-
 import Header from "../components/Header"
 import Filters from "../components/Filters"
 import Spotlight from "../components/Spotlight"
+import Rows from "../components/Rows"
 
 const pageStyles = {
     color: "#fff",
@@ -134,6 +134,7 @@ const IndexPage = () => {
             <Header />
             <Filters />
             <Spotlight />
+            <Rows />
             <h1 style={headingStyles}>
                 CCongratulations
                 <br />
