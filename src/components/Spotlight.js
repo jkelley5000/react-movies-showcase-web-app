@@ -64,6 +64,7 @@ const descriptionStyle = {
     marginLeft: 10,
     position: "relative",
     zIndex: 1,
+    maxWidth: 500
 }
 
 const nStyle = {
@@ -75,7 +76,10 @@ const nStyle = {
 }
 
 const overlayStyle = {
-
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    background: "linear-gradient(to bottom left, rgba(255, 255, 255, 0) 40%, rgba(0, 0, 0, 1) 100%)"
 }
 
 const Spotlight = () => {
