@@ -1,3 +1,4 @@
+import { StaticImage } from "gatsby-plugin-image"
 import * as React from "react"
 
 const greetingControlsStyle = {
@@ -14,6 +15,12 @@ const greetingText = {
     }
 }
 
+const searchIconStyle = {
+    width: 30,
+    cursor: "pointer",
+    marginTop: 8
+}
+
 const Header = () => {
     return (
         <main>
@@ -22,9 +29,11 @@ const Header = () => {
                     {greetingText.content}
                 </div>
                 <div>
-                    Icon
-                    Icon
-                    Icon
+                    <StaticImage
+                        src={"../images/search.svg"}
+                        alt="Search for a movie or show"
+                        style={searchIconStyle}
+                    />
                 </div>
             </div>
         </main>
