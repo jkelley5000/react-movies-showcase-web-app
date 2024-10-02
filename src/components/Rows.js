@@ -2,6 +2,7 @@ import React from "react"
 import movies from "../data/movies"
 import MovieItem from "./Movie";
 import { StaticImage } from "gatsby-plugin-image";
+import DetailsModal from "./DetailsModal";
 
 const genres = []
 const allMovies = {
@@ -83,6 +84,7 @@ const movieItemControlsStyle = {
     borderBottomLeftRadius: 5,
     padding: 5
 }
+
 const infoIconStyle = {
     cursor: 'pointer'
 }
@@ -101,6 +103,7 @@ const Rows = ({ selected }) => {
                     </ul>
                 </div>
             ))} */}
+            <DetailsModal movie={{ "id": 1, "title": "My Cousin Vinny", "type": "tv show", "genre": "Comedy", "thumbnail_url": "http://dummyimage.com/217x.png/dddddd/000000", "description": "Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus." }} />
             <h2 style={moviesRowHeadingStyle}>Comedy</h2>
             <div style={moviesRowStyle}>
                 {allMovies['comedy'].map(movie => (
