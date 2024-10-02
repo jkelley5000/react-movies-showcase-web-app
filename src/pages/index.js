@@ -128,13 +128,18 @@ const links = [
     },
 ]
 
+const selected = {
+    type: "all",
+    genre: "all"
+}
+
 const IndexPage = () => {
     return (
         <main style={pageStyles}>
             <Header />
             <Filters />
             <Spotlight />
-            <Rows />
+            <Rows selected={selected} />
             <h1 style={headingStyles}>
                 CCongratulations
                 <br />
