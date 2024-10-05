@@ -104,99 +104,55 @@ const Rows = ({ selected }) => {
         setShowMovieDetails(!showMovieDetails)
     }
 
+    const processGroupNameValue = (groupName) => {
+        let properGroupName = "Comedy";
+        if (groupName.includes("_")) {
+            properGroupName = groupName.replace("_", " ").toUpperCase()
+        } else {
+            properGroupName = groupName.toUpperCase()
+        }
+
+        return properGroupName
+    }
+
     return (
         <main>
-            {/* Nice */}
-            {/* {Object.keys(allMovies).map(group => (
+            {Object.keys(allMovies).map(group => (
                 <div key={group}>
-                    <h2>{group}</h2>
-                    <ul>
-                        {allMovies[group].map((item, index) => (
-                            <li key={index}>{item}</li>
+                    <h2 style={moviesRowHeadingStyle}>{processGroupNameValue(group)}</h2>
+                    <div style={moviesRowStyle}>
+                        {allMovies[group].map((movie, index) => (
+                            <div key={movie['id'] + '-' + (Math.random(16) * (1 - 1000))} style={movieItemStyle}>
+                                <div>
+                                    <p>{movie['title']}</p>
+                                    <img src={movie.thumbnail_url} />
+                                </div>
+                                <div
+                                    style={movieItemControlsStyle}
+                                    onClick={() => viewMovieDetails(movie)}
+                                >
+                                    <StaticImage
+                                        src={"../images/info.svg"}
+                                        alt="Movie details"
+                                        style={infoIconStyle}
+                                    />
+                                    <StaticImage
+                                        src={"../images/three_dots.svg"}
+                                        alt="Movie actions"
+                                        style={infoIconStyle}
+                                    />
+                                </div>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 </div>
-            ))} */}
+            ))}
+
             <DetailsModal
                 movie={selectedMovie}
                 showDetailsModal={showMovieDetails}
                 onCloseButtonClick={viewMovieDetails}
             />
-
-            <h2 style={moviesRowHeadingStyle}>Comedy</h2>
-            <div style={moviesRowStyle}>
-                {allMovies['comedy'].map(movie => (
-                    <div key={movie['id']} style={movieItemStyle}>
-                        <div>
-                            <p>{movie['title']}</p>
-                            <img src={movie.thumbnail_url} />
-                        </div>
-                        <div
-                            style={movieItemControlsStyle}
-                            onClick={() => viewMovieDetails(movie)}
-                        >
-                            <StaticImage
-                                src={"../images/info.svg"}
-                                alt="Movie details"
-                                style={infoIconStyle}
-                            />
-                            <StaticImage
-                                src={"../images/three_dots.svg"}
-                                alt="Movie actions"
-                                style={infoIconStyle}
-                            />
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            <h2 style={moviesRowHeadingStyle}>Action</h2>
-            <div style={moviesRowStyle}>
-                {allMovies['action'].map(movie => (
-                    <div key={movie['id']} style={movieItemStyle}>
-                        <div>
-                            <p>{movie['title']}</p>
-                            <img src={movie.thumbnail_url} />
-                        </div>
-                        <div style={movieItemControlsStyle}>
-                            <StaticImage
-                                src={"../images/info.svg"}
-                                alt="Movie details"
-                                style={infoIconStyle}
-                            />
-                            <StaticImage
-                                src={"../images/three_dots.svg"}
-                                alt="Movie actions"
-                                style={infoIconStyle}
-                            />
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            <h2 style={moviesRowHeadingStyle}>Animation</h2>
-            <div style={moviesRowStyle}>
-                {allMovies['animation'].map(movie => (
-                    <div key={movie['id']} style={movieItemStyle}>
-                        <div>
-                            <p>{movie['title']}</p>
-                            <img src={movie.thumbnail_url} />
-                        </div>
-                        <div style={movieItemControlsStyle}>
-                            <StaticImage
-                                src={"../images/info.svg"}
-                                alt="Movie details"
-                                style={infoIconStyle}
-                            />
-                            <StaticImage
-                                src={"../images/three_dots.svg"}
-                                alt="Movie actions"
-                                style={infoIconStyle}
-                            />
-                        </div>
-                    </div>
-                ))}
-            </div>
         </main>
     )
 }
