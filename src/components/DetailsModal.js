@@ -68,12 +68,21 @@ const movieDescriptionStyle = {
     overflow: 'hidden'
 }
 
-const DetailsModal = ({ movie }) => {
+
+const DetailsModal = ({ movie, showDetailsModal, onCloseButtonClick }) => {
+    if (!showDetailsModal) {
+        return null
+    }
+
+    const closeButtonClick = () => {
+        onCloseButtonClick()
+    }
+
     return (
         <main>
             <div style={overlayStyle}></div>
             <div style={modalStyle}>
-                <div style={closeIconContainerStyle}>
+                <div style={closeIconContainerStyle} onClick={closeButtonClick}>
                     <StaticImage
                         src={"../images/close.svg"}
                         alt="Close modal"
