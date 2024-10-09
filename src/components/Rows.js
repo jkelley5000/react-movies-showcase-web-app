@@ -88,6 +88,58 @@ const infoIconStyle = {
     cursor: 'pointer'
 }
 
+const rightButtonRowSlideStyle = {
+    position: "absolute",
+    right: 12,
+    marginTop: 100,
+    padding: 5,
+    cursor: "pointer",
+    backgroundColor: "#888",
+    borderRadius: "50%",
+    width: 55,
+    height: 55,
+    display: "flex",
+    justifyContent: "center"
+}
+
+const leftButtonRowSlideStyle = {
+    position: "absolute",
+    left: 12,
+    marginTop: 100,
+    paddingTop: 5,
+    paddingRight: 5,
+    paddingBottom: 5,
+    paddingLeft: 15,
+    cursor: "pointer",
+    backgroundColor: "#888",
+    borderRadius: "50%",
+    width: 55,
+    height: 55,
+    display: "flex",
+    justifyContent: "center"
+}
+
+const slideIconStyle = {
+    // margin: 5,
+    img: {
+        width: 40,
+        height: 40,
+        objectFit: "contain !important",
+        marginLeft: 8
+    }
+}
+
+const leftSlideIconStyle = {
+    // margin: 5,
+    // marginLeft: 10,
+    // img: {
+    //     width: 43,
+    //     height: 40,
+    //     objectFit: "contain !important",
+    //     marginLeft: 8
+    // }
+}
+
 let selectedMovie = {
     id: 0,
     title: '',
@@ -120,6 +172,24 @@ const Rows = ({ selected }) => {
             {Object.keys(allMovies).map(group => (
                 <div key={group}>
                     <h2 style={moviesRowHeadingStyle}>{processGroupNameValue(group)}</h2>
+                    <div style={leftButtonRowSlideStyle}>
+                        <StaticImage
+                            src={"../images/left_arrow.svg"}
+                            alt={"previous movies"}
+                            // style={leftSlideIconStyle}
+                            objectFit="contain"
+                            marginleft="5px"
+                        />
+                    </div>
+                    <div style={rightButtonRowSlideStyle}>
+                        <StaticImage
+                            src={"../images/right_arrow.svg"}
+                            alt={"more movies"}
+                            style={slideIconStyle}
+                            width={35}
+                            height={35}
+                        />
+                    </div>
                     <div style={moviesRowStyle}>
                         {allMovies[group].map((movie, index) => (
                             <div key={movie['id'] + '-' + (Math.random(16) * (1 - 1000))} style={movieItemStyle}>
@@ -133,12 +203,12 @@ const Rows = ({ selected }) => {
                                 >
                                     <StaticImage
                                         src={"../images/info.svg"}
-                                        alt="Movie details"
+                                        alt={"Movie details"}
                                         style={infoIconStyle}
                                     />
                                     <StaticImage
                                         src={"../images/three_dots.svg"}
-                                        alt="Movie actions"
+                                        alt={"Movie actions"}
                                         style={infoIconStyle}
                                     />
                                 </div>
