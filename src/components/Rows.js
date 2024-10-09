@@ -92,7 +92,7 @@ const rightButtonRowSlideStyle = {
     position: "absolute",
     right: 12,
     marginTop: 100,
-    padding: 5,
+    padding: 10,
     cursor: "pointer",
     backgroundColor: "#888",
     borderRadius: "50%",
