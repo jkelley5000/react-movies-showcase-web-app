@@ -17,12 +17,24 @@ const selected = {
 }
 
 const IndexPage = () => {
+    // Define initial movies state
+    const [moviesData, setMoviesData] = React.useState([])
+    React.useEffect(() => {
+        fetch(`http://localhost:5255/all-movies-shows`)
+            .then(response => response.json())
+            .then(data => {
+                // Set movies state to results returned from API call to get all movies and shows
+                setMoviesData(data)
+            })
+            .catch(error => console.error("Error fetching movies:", error))
+    }, [])
+
     return (
         <main style={pageStyles}>
             <Header />
             <Filters />
             <Spotlight />
-            <Rows selected={selected} />
+            <Rows selected={selected} movies={moviesData} />
         </main>
     )
 }
