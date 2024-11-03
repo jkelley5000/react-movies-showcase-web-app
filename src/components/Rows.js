@@ -1,7 +1,6 @@
 import React, { useState } from "react"
-import movies from "../data/movies"
-import { StaticImage } from "gatsby-plugin-image";
-import DetailsModal from "./DetailsModal";
+import { StaticImage } from "gatsby-plugin-image"
+import DetailsModal from "./DetailsModal"
 
 const genres = []
 const allMovies = {
@@ -24,36 +23,6 @@ const allMovies = {
     film_noir: [],
     war: []
 }
-
-movies.map(movie => {
-    // generate main genres
-    if (
-        movie.genre.includes("|") &&
-        !genres.find(genre => genre.includes(movie.genre.substring(0, movie.genre.indexOf('|'))))
-    ) {
-        genres.push(movie.genre.substring(0, movie.genre.indexOf('|')))
-    } else if (
-        !movie.genre.includes("|") &&
-        !genres.find(genre => genre.includes(movie.genre))
-    ) {
-        genres.push(movie.genre)
-    }
-
-    // aggregate each movie into a main genre category
-    genres.map(genre => {
-        if (movie.genre.toLowerCase().includes(genre.toLowerCase())) {
-            if (movie.genre.toLowerCase().includes('sci-fi')) {
-                allMovies['sci_fi'].push(movie)
-            } else if (movie.genre.toLowerCase().includes('film-noir')) {
-                allMovies['film_noir'].push(movie)
-            } else if (movie.genre.toLowerCase().includes('no genres listed')) {
-                allMovies['drama'].push(movie)
-            } else {
-                allMovies[genre.toLowerCase()].push(movie)
-            }
-        }
-    })
-});
 
 const moviesRowHeadingStyle = {
     fontSize: 23
@@ -149,7 +118,37 @@ let selectedMovie = {
     description: ''
 }
 
-const Rows = ({ selected }) => {
+const Rows = ({ selected, movies }) => {
+    movies.map(movie => {
+        // generate main genres
+        if (
+            movie.genre.includes("|") &&
+            !genres.find(genre => genre.includes(movie.genre.substring(0, movie.genre.indexOf('|'))))
+        ) {
+            genres.push(movie.genre.substring(0, movie.genre.indexOf('|')))
+        } else if (
+            !movie.genre.includes("|") &&
+            !genres.find(genre => genre.includes(movie.genre))
+        ) {
+            genres.push(movie.genre)
+        }
+
+        // aggregate each movie into a main genre category
+        genres.map(genre => {
+            if (movie.genre.toLowerCase().includes(genre.toLowerCase())) {
+                if (movie.genre.toLowerCase().includes('sci-fi')) {
+                    allMovies['sci_fi'].push(movie)
+                } else if (movie.genre.toLowerCase().includes('film-noir')) {
+                    allMovies['film_noir'].push(movie)
+                } else if (movie.genre.toLowerCase().includes('no genres listed')) {
+                    allMovies['drama'].push(movie)
+                } else {
+                    allMovies[genre.toLowerCase()].push(movie)
+                }
+            }
+        })
+    });
+
     const [showMovieDetails, setShowMovieDetails] = useState(false)
     const viewMovieDetails = (movie) => {
         selectedMovie = movie
