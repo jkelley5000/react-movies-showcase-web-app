@@ -55,10 +55,6 @@ const IndexPage = () => {
 
     return (
         <main style={pageStyles}>
-            <div>
-                <button onClick={updateChildData}>Update Child Data</button>
-                <button onClick={resetChildData}>Reset Child Data</button>
-            </div>
             <Header />
             <Filters onNewMoviesButtonClick={getNewMoviesData} />
             <Spotlight />
