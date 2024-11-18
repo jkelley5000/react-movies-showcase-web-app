@@ -1,9 +1,11 @@
 import React, { useState } from "react"
 import { StaticImage } from "gatsby-plugin-image"
 import DetailsModal from "./DetailsModal"
+import LazyLoad from "react-lazyload"
+import { useSelector } from 'react-redux'
 
 const genres = []
-const allMovies = {
+let allMovies = {
     comedy: [],
     action: [],
     animation: [],
@@ -21,7 +23,8 @@ const allMovies = {
     sci_fi: [],
     western: [],
     film_noir: [],
-    war: []
+    war: [],
+    imax: []
 }
 
 const moviesRowHeadingStyle = {
@@ -119,35 +122,77 @@ let selectedMovie = {
 }
 
 const Rows = ({ selected, movies }) => {
-    movies.map(movie => {
-        // generate main genres
-        if (
-            movie.genre.includes("|") &&
-            !genres.find(genre => genre.includes(movie.genre.substring(0, movie.genre.indexOf('|'))))
-        ) {
-            genres.push(movie.genre.substring(0, movie.genre.indexOf('|')))
-        } else if (
-            !movie.genre.includes("|") &&
-            !genres.find(genre => genre.includes(movie.genre))
-        ) {
-            genres.push(movie.genre)
-        }
-
-        // aggregate each movie into a main genre category
-        genres.map(genre => {
-            if (movie.genre.toLowerCase().includes(genre.toLowerCase())) {
-                if (movie.genre.toLowerCase().includes('sci-fi')) {
-                    allMovies['sci_fi'].push(movie)
-                } else if (movie.genre.toLowerCase().includes('film-noir')) {
-                    allMovies['film_noir'].push(movie)
-                } else if (movie.genre.toLowerCase().includes('no genres listed')) {
-                    allMovies['drama'].push(movie)
-                } else {
-                    allMovies[genre.toLowerCase()].push(movie)
-                }
+    const data = useSelector((state) => state.child.data)
+    movies = data
+    React.useEffect(() => {
+        resetMoviesData()
+    })
+    const aggregateMoviesData = (movies) => {
+        movies.data.map(movie => {
+            // generate main genres
+            if (
+                movie.genre.includes("|") &&
+                !genres.find(genre => genre.includes(movie.genre.substring(0, movie.genre.indexOf('|'))))
+            ) {
+                genres.push(movie.genre.substring(0, movie.genre.indexOf('|')))
+            } else if (
+                !movie.genre.includes("|") &&
+                !genres.find(genre => genre.includes(movie.genre))
+            ) {
+                genres.push(movie.genre)
             }
+
+            // aggregate each movie into a main genre category
+            genres.map(genre => {
+                if (movie.genre.toLowerCase().includes(genre.toLowerCase())) {
+                    if (movie.genre.toLowerCase().includes('sci-fi')) {
+                        if (allMovies['sci_fi'] !== undefined)
+                            allMovies['sci_fi'].push(movie)
+                    } else if (movie.genre.toLowerCase().includes('film-noir')) {
+                        if (allMovies['film_noir'] !== undefined)
+                            allMovies['film_noir'].push(movie)
+                    } else if (movie.genre.toLowerCase().includes('no genres listed')) {
+                        if (allMovies['mystery'] !== undefined)
+                            allMovies['mystery'].push(movie)
+                    } else {
+                        if (allMovies[genre.toLowerCase()] !== undefined)
+                            allMovies[genre.toLowerCase()].push(movie)
+                    }
+                }
+            })
         })
-    });
+    }
+    const resetMoviesData = () => {
+        movies = data
+        if (movies !== null) {
+            allMovies = {
+                comedy: [],
+                action: [],
+                animation: [],
+                crime: [],
+                drama: [],
+                children: [],
+                adventure: [],
+                documentary: [],
+                horror: [],
+                fantasy: [],
+                musical: [],
+                mystery: [],
+                romance: [],
+                thriller: [],
+                sci_fi: [],
+                western: [],
+                film_noir: [],
+                war: [],
+                imax: []
+            }
+            aggregateMoviesData(movies)
+        }
+    }
+
+    if (movies !== null) {
+        aggregateMoviesData(movies)
+    }
 
     const [showMovieDetails, setShowMovieDetails] = useState(false)
     const viewMovieDetails = (movie) => {
@@ -164,6 +209,22 @@ const Rows = ({ selected, movies }) => {
         }
 
         return properGroupName
+    }
+
+    const newGenres = Object.keys(allMovies)
+    const columnCount = Math.max(...Object.values(allMovies).map(arr => arr.length))
+    const rowCount = newGenres.length
+
+    const cellRenderer = ({ columnIndex, key, rowIndex, style }) => {
+        const newGenre = genres[rowIndex];
+        const newMovies = allMovies[newGenre];
+        const newMovie = newMovies[columnIndex];
+
+        return (
+            <div key={key} style={style}>
+                {newMovie.title}
+            </div>
+        );
     }
 
     return (
@@ -194,22 +255,28 @@ const Rows = ({ selected, movies }) => {
                             <div key={movie['id'] + '-' + (Math.random(16) * (1 - 1000))} style={movieItemStyle}>
                                 <div>
                                     <p>{movie['title']}</p>
-                                    <img src={movie.thumbnail_url} />
+                                    <LazyLoad height={150}>
+                                        <img src={movie.thumbnail_url} />
+                                    </LazyLoad>
                                 </div>
                                 <div
                                     style={movieItemControlsStyle}
                                     onClick={() => viewMovieDetails(movie)}
                                 >
-                                    <StaticImage
-                                        src={"../images/info.svg"}
-                                        alt={"Movie details"}
-                                        style={infoIconStyle}
-                                    />
-                                    <StaticImage
-                                        src={"../images/three_dots.svg"}
-                                        alt={"Movie actions"}
-                                        style={infoIconStyle}
-                                    />
+                                    <LazyLoad height={150}>
+                                        <StaticImage
+                                            src={"../images/info.svg"}
+                                            alt={"Movie details"}
+                                            style={infoIconStyle}
+                                        />
+                                    </LazyLoad>
+                                    <LazyLoad height={150}>
+                                        <StaticImage
+                                            src={"../images/three_dots.svg"}
+                                            alt={"Movie actions"}
+                                            style={infoIconStyle}
+                                        />
+                                    </LazyLoad>
                                 </div>
                             </div>
                         ))}

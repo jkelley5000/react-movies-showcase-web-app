@@ -12,20 +12,31 @@ const filterListStyle = {
     borderRadius: 15,
     paddingRight: 10,
     paddingLeft: 10,
-    marginRight: 6
+    marginRight: 6,
+    cursor: "pointer"
 }
 
-const filterOptionStyle = {
+const filterOptionsStyle = {
 
 }
 
-const Filters = () => {
+const Filters = ({ onNewMoviesButtonClick }) => {
+    const newMoviesButtonClick = (type) => {
+        onNewMoviesButtonClick(type)
+    }
+
     return (
         <main style={filtersMainStyle}>
-            <div style={filterListStyle}>
+            <div
+                style={filterListStyle}
+                onClick={() => newMoviesButtonClick('all-shows')}
+            >
                 TV Shows
             </div>
-            <div style={filterListStyle}>
+            <div
+                style={filterListStyle}
+                onClick={() => newMoviesButtonClick('all-movies')}
+            >
                 Movies
             </div>
             <div style={filterListStyle}>

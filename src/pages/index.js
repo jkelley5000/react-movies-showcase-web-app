@@ -3,6 +3,9 @@ import Header from "../components/Header"
 import Filters from "../components/Filters"
 import Spotlight from "../components/Spotlight"
 import Rows from "../components/Rows"
+import store from "../store"
+import { Provider, useDispatch } from "react-redux"
+import { updateData, resetData } from '../store/childSlice'
 
 const pageStyles = {
     color: "#fff",
@@ -17,24 +20,49 @@ const selected = {
 }
 
 const IndexPage = () => {
-    // Define initial movies state
-    const [moviesData, setMoviesData] = React.useState([])
     React.useEffect(() => {
         fetch(`http://localhost:5255/all-movies-shows`)
             .then(response => response.json())
             .then(data => {
                 // Set movies state to results returned from API call to get all movies and shows
-                setMoviesData(data)
+                updateChildData(data)
             })
             .catch(error => console.error("Error fetching movies:", error))
     }, [])
 
+    const getNewMoviesData = async (type) => {
+        try {
+            const response = await fetch(`http://localhost:5255/${type}`)
+                .then(response => response.json())
+                .then(data => {
+                    updateChildData(data)
+                })
+
+        } catch (error) {
+            console.error("Error fetching shows:", error)
+        }
+    }
+
+    const dispatch = useDispatch()
+
+    const updateChildData = (data) => {
+        dispatch(updateData({ data }))
+    }
+
+    const resetChildData = () => {
+        dispatch(resetData())
+    }
+
     return (
         <main style={pageStyles}>
+            <div>
+                <button onClick={updateChildData}>Update Child Data</button>
+                <button onClick={resetChildData}>Reset Child Data</button>
+            </div>
             <Header />
-            <Filters />
+            <Filters onNewMoviesButtonClick={getNewMoviesData} />
             <Spotlight />
-            <Rows selected={selected} movies={moviesData} />
+            <Rows selected={selected} />
         </main>
     )
 }
