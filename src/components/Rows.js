@@ -211,6 +211,17 @@ const Rows = ({ selected, movies }) => {
         return properGroupName
     }
 
+    const arrowClick = (group, direction) => {
+        const row = document.querySelector(`.movies-row-${group}`)
+        if (direction === 'right') {
+            row.scrollBy({ left: row.offsetWidth, behavior: 'smooth' })
+        }
+        if (direction === 'left') {
+            row.scrollBy({ left: -row.offsetWidth, behavior: 'smooth' })
+        }
+
+    }
+
     const newGenres = Object.keys(allMovies)
     const columnCount = Math.max(...Object.values(allMovies).map(arr => arr.length))
     const rowCount = newGenres.length
@@ -232,7 +243,10 @@ const Rows = ({ selected, movies }) => {
             {Object.keys(allMovies).map(group => (
                 <div key={group}>
                     <h2 style={moviesRowHeadingStyle}>{processGroupNameValue(group)}</h2>
-                    <div style={leftButtonRowSlideStyle}>
+                    <div
+                        style={leftButtonRowSlideStyle}
+                        onClick={() => arrowClick(group, 'left')}
+                    >
                         <StaticImage
                             src={"../images/left_arrow.svg"}
                             alt={"previous movies"}
@@ -241,7 +255,10 @@ const Rows = ({ selected, movies }) => {
                             marginleft="5px"
                         />
                     </div>
-                    <div style={rightButtonRowSlideStyle}>
+                    <div
+                        style={rightButtonRowSlideStyle}
+                        onClick={() => arrowClick(group, 'right')}
+                    >
                         <StaticImage
                             src={"../images/right_arrow.svg"}
                             alt={"more movies"}
@@ -250,7 +267,10 @@ const Rows = ({ selected, movies }) => {
                             height={35}
                         />
                     </div>
-                    <div style={moviesRowStyle}>
+                    <div
+                        style={moviesRowStyle}
+                        className={`movies-row-${group}`}
+                    >
                         {allMovies[group].map((movie, index) => (
                             <div key={movie['id'] + '-' + (Math.random(16) * (1 - 1000))} style={movieItemStyle}>
                                 <div>
