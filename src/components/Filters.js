@@ -16,11 +16,6 @@ const filterListStyle = {
     cursor: "pointer"
 }
 
-const filterSelectedStyle = {
-    backgroundColor: "#fff",
-    color: "#000"
-}
-
 const filters = [
     {
         id: 1,
