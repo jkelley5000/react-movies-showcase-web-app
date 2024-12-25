@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.filter-selected-style {
+    background-color: #fff;
+    color: #000;
+}
