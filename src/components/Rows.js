@@ -243,67 +243,69 @@ const Rows = ({ selected, movies }) => {
     return (
         <main>
             {Object.keys(allMovies).map(group => (
-                <div key={group}>
-                    <h2 style={moviesRowHeadingStyle}>{processGroupNameValue(group)}</h2>
-                    <div
-                        style={leftButtonRowSlideStyle}
-                        onClick={() => arrowClick(group, 'left')}
-                    >
-                        <StaticImage
-                            src={"../images/left_arrow.svg"}
-                            alt={"previous movies"}
-                            // style={leftSlideIconStyle}
-                            objectFit="contain"
-                            marginleft="5px"
-                        />
-                    </div>
-                    <div
-                        style={rightButtonRowSlideStyle}
-                        onClick={() => arrowClick(group, 'right')}
-                    >
-                        <StaticImage
-                            src={"../images/right_arrow.svg"}
-                            alt={"more movies"}
-                            style={slideIconStyle}
-                            width={35}
-                            height={35}
-                        />
-                    </div>
-                    <div
-                        style={moviesRowStyle}
-                        className={`movies-row-${group}`}
-                    >
-                        {allMovies[group].map((movie, index) => (
-                            <div key={movie['id'] + '-' + (Math.random(16) * (1 - 1000))} style={movieItemStyle}>
-                                <div>
-                                    <p>{movie['title']}</p>
-                                    <LazyLoad height={150}>
-                                        <img src={movie.thumbnail_url} />
-                                    </LazyLoad>
+                allMovies[group].length > 0 && (
+                    <div key={group}>
+                        <h2 style={moviesRowHeadingStyle}>{processGroupNameValue(group)}</h2>
+                        <div
+                            style={leftButtonRowSlideStyle}
+                            onClick={() => arrowClick(group, 'left')}
+                        >
+                            <StaticImage
+                                src={"../images/left_arrow.svg"}
+                                alt={"previous movies"}
+                                // style={leftSlideIconStyle}
+                                objectFit="contain"
+                                marginleft="5px"
+                            />
+                        </div>
+                        <div
+                            style={rightButtonRowSlideStyle}
+                            onClick={() => arrowClick(group, 'right')}
+                        >
+                            <StaticImage
+                                src={"../images/right_arrow.svg"}
+                                alt={"more movies"}
+                                style={slideIconStyle}
+                                width={35}
+                                height={35}
+                            />
+                        </div>
+                        <div
+                            style={moviesRowStyle}
+                            className={`movies-row-${group}`}
+                        >
+                            {allMovies[group].length > 0 && allMovies[group].map((movie, index) => (
+                                <div key={movie['id'] + '-' + (Math.random(16) * (1 - 1000))} style={movieItemStyle}>
+                                    <div>
+                                        <p>{movie['title']}</p>
+                                        <LazyLoad height={150}>
+                                            <img src={movie.thumbnail_url} />
+                                        </LazyLoad>
+                                    </div>
+                                    <div
+                                        style={movieItemControlsStyle}
+                                        onClick={() => viewMovieDetails(movie)}
+                                    >
+                                        <LazyLoad height={150}>
+                                            <StaticImage
+                                                src={"../images/info.svg"}
+                                                alt={"Movie details"}
+                                                style={infoIconStyle}
+                                            />
+                                        </LazyLoad>
+                                        <LazyLoad height={150}>
+                                            <StaticImage
+                                                src={"../images/three_dots.svg"}
+                                                alt={"Movie actions"}
+                                                style={infoIconStyle}
+                                            />
+                                        </LazyLoad>
+                                    </div>
                                 </div>
-                                <div
-                                    style={movieItemControlsStyle}
-                                    onClick={() => viewMovieDetails(movie)}
-                                >
-                                    <LazyLoad height={150}>
-                                        <StaticImage
-                                            src={"../images/info.svg"}
-                                            alt={"Movie details"}
-                                            style={infoIconStyle}
-                                        />
-                                    </LazyLoad>
-                                    <LazyLoad height={150}>
-                                        <StaticImage
-                                            src={"../images/three_dots.svg"}
-                                            alt={"Movie actions"}
-                                            style={infoIconStyle}
-                                        />
-                                    </LazyLoad>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )
             ))}
 
             <DetailsModal
