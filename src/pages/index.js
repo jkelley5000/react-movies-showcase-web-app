@@ -3,9 +3,9 @@ import Header from "../components/Header"
 import Filters from "../components/Filters"
 import Spotlight from "../components/Spotlight"
 import Rows from "../components/Rows"
-import store from "../store"
-import { Provider, useDispatch } from "react-redux"
-import { updateData, resetData } from '../store/childSlice'
+import { useDispatch } from "react-redux"
+import { updateData, resetData } from '../store/slices/childSlice'
+import { updateGenres } from '../store/slices/genresSlice'
 
 const pageStyles = {
     color: "#fff",
@@ -20,12 +20,34 @@ const selected = {
 }
 
 const IndexPage = () => {
+    const genres = []
+    const dispatch = useDispatch()
+    const updateGenreData = (genres) => {
+        dispatch(updateGenres({ genres }))
+    }
     React.useEffect(() => {
         fetch(`http://localhost:5255/all-movies-shows`)
             .then(response => response.json())
             .then(data => {
                 // Set movies state to results returned from API call to get all movies and shows
                 updateChildData(data)
+                // generate main genres and add to genres state
+                data.map(movie => {
+                    if (
+                        movie.genre.includes("|") &&
+                        !genres.find(genre => genre.includes(movie.genre.substring(0, movie.genre.indexOf('|'))))
+                    ) {
+                        genres.push(movie.genre.substring(0, movie.genre.indexOf('|')))
+                    } else if (
+                        !movie.genre.includes("|") &&
+                        !genres.find(genre => genre.includes(movie.genre))
+                    ) {
+                        genres.push(movie.genre)
+                    }
+                })
+
+                updateGenreData(genres)
+
             })
             .catch(error => console.error("Error fetching movies:", error))
     }, [])
@@ -42,8 +64,6 @@ const IndexPage = () => {
             console.error("Error fetching shows:", error)
         }
     }
-
-    const dispatch = useDispatch()
 
     const updateChildData = (data) => {
         dispatch(updateData({ data }))

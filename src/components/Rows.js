@@ -127,7 +127,8 @@ const Rows = ({ selected, movies }) => {
     React.useEffect(() => {
         resetMoviesData()
     })
-    const aggregateMoviesData = (movies) => {
+
+    const aggregateMoviesData = (data) => {
         movies.data.map(movie => {
             // generate main genres
             if (
@@ -186,6 +187,7 @@ const Rows = ({ selected, movies }) => {
                 war: [],
                 imax: []
             }
+
             aggregateMoviesData(movies)
         }
     }

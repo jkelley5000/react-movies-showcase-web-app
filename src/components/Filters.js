@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useSelector } from "react-redux"
 
 const filtersMainStyle = {
     marginTop: 5,
@@ -39,13 +40,36 @@ const filters = [
     }
 ]
 
+const categoriesListStyle = {
+    display: "flex",
+    flexDirection: "column",
+    position: "absolute",
+    top: 96,
+    left: 188,
+    width: 232,
+    backgroundColor: "#fff",
+    border: "solid 1px #989898",
+    borderRadius: 15,
+    zIndex: 1000
+}
+
+const categoryStyle = {
+    color: "#000",
+    cursor: "pointer",
+    fontSize: 23,
+    paddingLeft: 10,
+}
+
 const Filters = ({ onNewMoviesButtonClick }) => {
+    const genres = useSelector(state => state.genres.data)
+
     const [filterActive, setFilterActive] = useState({
         allShows: false,
         allMovies: false,
         categories: false,
         myList: false
     })
+    const [categoriesActive, setCategoriesActive] = useState(false)
 
     const transformActiveFilter = (filter) => {
         let transformedFilter = ""
@@ -72,6 +96,15 @@ const Filters = ({ onNewMoviesButtonClick }) => {
                 setFilterActive(active => ({ ...active, [f.name]: false }))
             }
         })
+        if (transformedFilter === 'categories') {
+            setCategoriesActive(!categoriesActive)
+        }
+    }
+
+    const onCategorySelected = (category) => {
+        let type = 'movies-by-genre/?genre=' + category
+        newMoviesButtonClick(type)
+        setCategoriesActive(false)
     }
 
     return (
@@ -104,6 +137,20 @@ const Filters = ({ onNewMoviesButtonClick }) => {
             >
                 My List
             </div>
+
+            {categoriesActive && (
+                <div style={categoriesListStyle}>
+                    {genres && genres.genres.map(genre => (
+                        <div
+                            style={categoryStyle}
+                            onClick={() => onCategorySelected(genre)}
+                            key={genre}
+                        >
+                            {genre}
+                        </div>
+                    ))}
+                </div>
+            )}
         </main>
     )
 }
